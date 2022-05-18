@@ -1,9 +1,9 @@
 pipeline {
-    agent { label 'dev' { image 'python:3.10.1-alpine' } }
+    agent { node { label 'dev' } }
     stages {
         stage('build') {
             steps {
-                sh 'python --version'
+                sh 'echo hello'
             }
         }
     }
