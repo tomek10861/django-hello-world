@@ -22,10 +22,26 @@ pipeline {
             }
         }
 
-        stage('Build') {
+        stage('Build env file') {
           steps {
                 sh '''#!/bin/bash
                       ls -lht
+                   '''
+                sh '''#!/bin/bash
+                echo "DEBUGAPP=FALSE" > .env
+                echo "POSTGRES_NAME=$POSTGRES_DB" >> .env
+                echo "POSTGRES_USER=$POSTGRES_USER" >> .env
+                echo "POSTGRES_PASSWORD=$POSTGRES_PASSWORD" >> .env
+                echo "POSTGRES_HOSTDBNAME=$POSTGRES_HOST" >> .env
+                echo "POSTGRES_PORT=5432" >> .env
+                   '''
+          }
+        }
+
+        stage('Build and run docker') {
+          steps {
+                sh '''#!/bin/bash
+                      docker-compose --profile dev_prod up -d
                    '''
           }
         }
