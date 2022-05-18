@@ -1,7 +1,7 @@
-version: "3"
-   
+version: "3.9"
+
 services:
-  db:
+  db-dev:
     image: postgres:14-bullseye
     volumes:
       - ./data/db:/var/lib/postgresql/data
@@ -9,16 +9,25 @@ services:
       - POSTGRES_DB=${POSTGRES_NAME}
       - POSTGRES_USER=${POSTGRES_USER}
       - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+    profiles: ["local"]
+    networks:
+      - app_net
 
-  web:
-    build: 
-      context: ./
-      dockerfile: ./conf/Dockerfile
-    command: python manage.py runserver 0.0.0.0:8000
-    volumes:
-      - ./files:/code
+  proxy:
+    build: ./conf/proxy
     ports:
-      - "8000:8000"
+      - "443:443"
+    environment:
+      - APP_HOST=app
+    profiles: ["dev_prod"]
+    networks:
+      - app_net
+
+  app:
+    build:
+      context: ./
+      dockerfile: ./conf/app/Dockerfile
+    command: uwsgi --ini uwsgi.ini
     environment:
       - DEBUG=${DEBUGAPP}
       - POSTGRES_NAME=${POSTGRES_NAME}
@@ -26,5 +35,30 @@ services:
       - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
       - POSTGRES_HOSTDBNAME=${POSTGRES_HOSTDBNAME}
       - POSTGRES_PORT=${POSTGRES_PORT}
+    profiles: ["dev_prod"]
+    networks:
+      - app_net
+
+  local-app:
+    build:
+      context: ./
+      dockerfile: ./conf/app/Dockerfile
+    command: python manage.py runserver 0.0.0.0:8000
+    ports:
+       - "8000:8000"
+    environment:
+      - DEBUG=${DEBUGAPP}
+      - POSTGRES_NAME=${POSTGRES_NAME}
+      - POSTGRES_USER=${POSTGRES_USER}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+      - POSTGRES_HOSTDBNAME=${POSTGRES_HOSTDBNAME}
+      - POSTGRES_PORT=${POSTGRES_PORT}
+    profiles: ["local"]
     depends_on:
-      - db
+      - db-dev
+    networks:
+      - app_net
+
+networks:
+  app_net:
+    driver: bridge
