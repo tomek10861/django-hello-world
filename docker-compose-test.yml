@@ -1,0 +1,43 @@
+version: "3"
+
+services:
+  db1:
+    image: postgres:14-bullseye
+    volumes:
+      - ./data/db:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_DB=${POSTGRES_NAME}
+      - POSTGRES_USER=${POSTGRES_USER}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+    networks:
+      - app_net
+  proxy:
+    build: ./conf/proxy
+    ports:
+      - "443:443"
+    networks:
+      - app_net
+
+  web:
+    build:
+      context: ./
+      dockerfile: ./conf/app/Dockerfile
+#    command: python manage.py runserver 0.0.0.0:8000
+    command: uwsgi --ini uwsgi.ini
+    # ports:
+    #   - "8000:8000"
+    environment:
+      - DEBUG=${DEBUGAPP}
+      - POSTGRES_NAME=${POSTGRES_NAME}
+      - POSTGRES_USER=${POSTGRES_USER}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+      - POSTGRES_HOSTDBNAME=${POSTGRES_HOSTDBNAME}
+      - POSTGRES_PORT=${POSTGRES_PORT}
+    depends_on:
+      - db1
+    networks:
+      - app_net
+
+networks:
+  app_net:
+    driver: bridge
