@@ -1,5 +1,5 @@
 pipeline {
-    agent { dev { image 'python:3.10.1-alpine' } }
+    agent { label 'dev' { image 'python:3.10.1-alpine' } }
     stages {
         stage('build') {
             steps {
