@@ -15,6 +15,8 @@ services:
     build: ./conf/proxy
     ports:
       - "443:443"
+    environment:
+      - APP_HOST=web
     networks:
       - app_net
 

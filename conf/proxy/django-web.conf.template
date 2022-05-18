@@ -19,7 +19,7 @@ server {
         location / {
                 uwsgi_read_timeout 800;
                 include uwsgi_params;
-                uwsgi_pass  web:8001;
+                uwsgi_pass  ${APP_HOST}:8001;
         }
         # You may need this to prevent return 404 recursion.
         location = /404.html {
