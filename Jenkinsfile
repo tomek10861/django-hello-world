@@ -26,6 +26,7 @@ pipeline {
           steps {
                 sh '''#!/bin/bash
                       ls -lht
+                      sudo chown -R `whoami` .
                    '''
                 sh '''#!/bin/bash
                 echo "DEBUGAPP=FALSE" > .env
