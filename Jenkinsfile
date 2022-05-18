@@ -8,6 +8,7 @@ pipeline {
     POSTGRES_PASSWORD = credentials('POSTGRES_PASSWORD_DEV')
     }
 
+    def scmVars
 
     stages {
         stage('Git clone') {
