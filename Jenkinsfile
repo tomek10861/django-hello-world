@@ -41,9 +41,8 @@ pipeline {
 
         stage('Build and run docker') {
           steps {
-                sh '''#!/bin/bash
-                      docker-compose --profile dev_prod up -d
-                   '''
+                sh "docker-compose --profile dev_prod build"
+                sh "docker-compose --profile dev_prod up -d"
           }
         }
 
