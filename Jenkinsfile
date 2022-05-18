@@ -24,7 +24,9 @@ pipeline {
 
         stage('Build') {
           steps {
-                sh '''#!/bin/bash ls -lht'''
+                sh '''#!/bin/bash
+                      ls -lht
+                   '''
           }
         }
 
