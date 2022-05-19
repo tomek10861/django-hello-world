@@ -19,10 +19,10 @@
     ).trim()
     sh '''#!/bin/bash
     echo "#git repository" > buildinfo.txt
-    echo "branch=${branch}" >> buildinfo.txt
-    echo "commit=${commit}" >> buildinfo.txt
-    echo "msg=${msg}" >> buildinfo.txt
-    echo "author=${author}" >> buildinfo.txt
+    echo "branch=$branch" >> buildinfo.txt
+    echo "commit=$commit" >> buildinfo.txt
+    echo "msg=$msg" >> buildinfo.txt
+    echo "author=$author" >> buildinfo.txt
     '''
           }
 
