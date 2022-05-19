@@ -19,14 +19,14 @@ pipeline {
 
           stages {
           stage('Git clone dev') {
-              when { environment name: params.NODE, value: 'dev' }
+              when { expression {  params.NODE == 'dev' } }
               steps {
                   gitClone('dev')
               }
           }
 
           stage('Git clone prod') {
-              when { environment name: params.NODE, value: 'prod' }
+              when { expression {  params.NODE == 'prod' } }
               steps {
                   gitClone('main')
               }
