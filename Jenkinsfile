@@ -1,6 +1,6 @@
     def gitClone(nodeEnv) {
   //      echo 'Git clone from:' nodeEnv
-        log = sh(returnStdout:true, script: ('git branch: nodeEnv, changelog: false, credentialsId: \'1a83e8db-8990-44e5-8402-d991ecc3b7f1\', poll: true, url: \'https://github.com/tomek10861/django-hello-world.git\'').trim()
+        log = sh(returnStdout:true, script: ('git branch: nodeEnv, changelog: false, credentialsId: \'1a83e8db-8990-44e5-8402-d991ecc3b7f1\', poll: true, url: \'https://github.com/tomek10861/django-hello-world.git\'')).trim()
         echo "Git committer email: ${log}"
 
     //                  echo "GIT_BRANCH is ${GIT_BRANCH}"
