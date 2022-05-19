@@ -1,28 +1,28 @@
     def gitClone(nodeEnv) {
         git branch: nodeEnv, changelog: false, credentialsId: '1a83e8db-8990-44e5-8402-d991ecc3b7f1', poll: true, url: 'https://github.com/tomek10861/django-hello-world.git'
 
-    branch = sh (
+    env.branch = sh (
         script: 'git --no-pager show -s --format=\'%d\' | cut -d\'>\' -f2 | cut -d\',\' -f1',
         returnStdout: true
     ).trim()
-    commit = sh (
+    env.commit = sh (
         script: 'git --no-pager show -s --format=\'%h\'',
         returnStdout: true
     ).trim()
-    msg = sh (
+    env.msg = sh (
         script: 'git --no-pager show -s --format=\'%s\'',
         returnStdout: true
     ).trim()
-    author = sh (
+    env.author = sh (
         script: 'git --no-pager show -s --format=\'%cn\'',
         returnStdout: true
     ).trim()
 
-    writeFile(file: 'buildinfo.txt', text: '#git repository\n branch=' + ${branch} + '\ncommit=' + ${commit})
-//    echo "branch=$branch" >> buildinfo.txt
-//    echo "commit=$commit" >> buildinfo.txt
-//    echo "msg=$msg" >> buildinfo.txt
-//    echo "author=$author" >> buildinfo.txt
+    //writeFile(file: 'buildinfo.txt', text: '#git repository\n branch=' + ${branch} + '\ncommit=' + ${commit})
+    echo "branch=$branch" >> buildinfo.txt
+    echo "commit=$commit" >> buildinfo.txt
+    echo "msg=$msg" >> buildinfo.txt
+    echo "author=$author" >> buildinfo.txt
 
           }
 
