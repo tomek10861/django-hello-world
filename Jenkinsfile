@@ -1,5 +1,4 @@
     def generateStage(nodeLabel) {
-        return {
           node(nodeLabel) {
               stage('Git clone') {
                   steps {
@@ -40,11 +39,10 @@
              }
 
           }
-      }
 }
 pipeline {
-      agent none
-//        agent { node { label params.NODE } }
+//      agent none
+        agent { node { label params.NODE } }
 
 
 
