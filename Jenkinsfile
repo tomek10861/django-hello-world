@@ -17,13 +17,13 @@
         script: 'git --no-pager show -s --format=\'%cn\'',
         returnStdout: true
     ).trim()
-    sh '''#!/bin/bash
-    echo "#git repository" > buildinfo.txt
-    echo "branch=$branch" >> buildinfo.txt
-    echo "commit=$commit" >> buildinfo.txt
-    echo "msg=$msg" >> buildinfo.txt
-    echo "author=$author" >> buildinfo.txt
-    '''
+
+    writeFile file: 'buildinfo.txt', text: '#git repository\n branch=' + ${branch} '\ncommit=' + $commit
+//    echo "branch=$branch" >> buildinfo.txt
+//    echo "commit=$commit" >> buildinfo.txt
+//    echo "msg=$msg" >> buildinfo.txt
+//    echo "author=$author" >> buildinfo.txt
+
           }
 
 pipeline {
