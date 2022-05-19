@@ -93,10 +93,10 @@ pipeline {
          }
         }
         stage('two') {
-    node {
-        sh 'exit 1'   // failure
-    }
-    }
+        steps {
+            sh 'exit 1'   // failure
+        }
+        }
         post {
         always {
               echo sh(script: 'env|sort', returnStdout: true)
