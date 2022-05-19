@@ -9,12 +9,21 @@
         script: 'git --no-pager show -s --format=\'%h\'',
         returnStdout: true
     ).trim()
-    echo "Git branch: ${branch}, coommit: ${commit}"
-
-
-    //                  echo "GIT_BRANCH is ${GIT_BRANCH}"
-    //                  echo "GIT_COMMIT is ${GIT_COMMIT}"
-    //                  echo "GIT_AUTHOR_NAME is ${GIT_AUTHOR_NAME}"
+    msg = sh (
+        script: 'git --no-pager show -s --format=\'%s\'',
+        returnStdout: true
+    ).trim()
+    author = sh (
+        script: 'git --no-pager show -s --format=\'%cn\'',
+        returnStdout: true
+    ).trim()
+    sh '''#!/bin/bash
+    echo "#git repository" > buildinfo.txt
+    echo "branch=${branch}" >> buildinfo.txt
+    echo "commit=${commit}" >> buildinfo.txt
+    echo "msg=${msg}" >> buildinfo.txt
+    echo "author=${author}" >> buildinfo.txt
+    '''
           }
 
 pipeline {
@@ -50,6 +59,7 @@ pipeline {
                   echo "POSTGRES_PASSWORD=$POSTGRES_PASSWORD" >> .env
                   echo "POSTGRES_HOSTDBNAME=$POSTGRES_HOST" >> .env
                   echo "POSTGRES_PORT=5432" >> .env
+                  cat buildinfo.txt
                      '''
             }
           }
