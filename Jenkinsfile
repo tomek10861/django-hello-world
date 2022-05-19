@@ -92,5 +92,9 @@ pipeline {
              }
          }
         }
-      echo sh(script: 'env|sort', returnStdout: true)
+        post {
+        always {
+              echo sh(script: 'env|sort', returnStdout: true)
+            }
+        }
   }
