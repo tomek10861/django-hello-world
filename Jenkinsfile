@@ -41,7 +41,7 @@
 
           }
       }
-}      
+}
 pipeline {
       agent none
 //        agent { node { label params.NODE } }
@@ -58,7 +58,9 @@ pipeline {
           stages {
           stage('non-parallel stage') {
               steps {
-                  generateStage(params.NODE)
+                script {
+                    generateStage(params.NODE)
+                  }
               }
           }
         }
