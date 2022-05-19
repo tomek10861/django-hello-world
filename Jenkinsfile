@@ -1,7 +1,7 @@
     def gitClone(nodeEnv) {
         git branch: nodeEnv, changelog: false, credentialsId: '1a83e8db-8990-44e5-8402-d991ecc3b7f1', poll: true, url: 'https://github.com/tomek10861/django-hello-world.git'
 
-    environment {
+
         branch = sh (
             script: 'git --no-pager show -s --format=\'%d\' | cut -d\'>\' -f2 | cut -d\',\' -f1',
             returnStdout: true
@@ -18,7 +18,6 @@
             script: 'git --no-pager show -s --format=\'%cn\'',
             returnStdout: true
         ).trim()
-    }
 
 //    writeFile(file: 'buildinfo.txt', text: '#git repository\n branch=' + ${branch} + '\ncommit=' + ${commit})
     echo "branch=$branch" >> buildinfo.txt
