@@ -19,7 +19,6 @@
             returnStdout: true
         ).trim()
 
-//    writeFile(file: 'buildinfo.txt', text: '#git repository\n branch=' + ${branch} + '\ncommit=' + ${commit})
     echo "branch=$branch" >> buildinfo.txt
     echo "commit=$commit" >> buildinfo.txt
     echo "msg=$msg" >> buildinfo.txt
