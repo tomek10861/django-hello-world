@@ -1,7 +1,7 @@
 pipeline {
 
     when {
-            expression { params.NODE == "dev" }
+            beforeAgent true; expression { params.NODE == "dev" }
         }
     agent { node { label 'dev' } }
 
