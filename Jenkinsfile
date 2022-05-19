@@ -41,7 +41,8 @@
 
           }
       }
-      pipeline {
+}      
+pipeline {
       agent none
 //        agent { node { label params.NODE } }
 
