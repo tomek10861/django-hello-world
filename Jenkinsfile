@@ -96,6 +96,7 @@ pipeline {
     node {
         sh 'exit 1'   // failure
     }
+    }
         post {
         always {
               echo sh(script: 'env|sort', returnStdout: true)
