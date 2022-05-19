@@ -18,18 +18,19 @@ pipeline {
           }
 
           stages {
-          stage('Git clone') {
+          stage('Git clone dev') {
               when { params.NODE 'dev' }
               steps {
                   gitClone('dev')
               }
+          }
 
+          stage('Git clone prod') {
               when { params.NODE 'prod' }
               steps {
                   gitClone('main')
               }
           }
-
           stage('Build env file') {
             steps {
                   sh '''#!/bin/bash
