@@ -8,3 +8,4 @@ COPY conf/app/requirements.txt /code/
 RUN pip install -r requirements.txt
 COPY files/. /code/
 COPY conf/app/uwsgi.ini /code/uwsgi.ini
+COPY buildinfo.txt /code/buildinfo.txt
