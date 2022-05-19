@@ -1,11 +1,15 @@
     def gitClone(nodeEnv) {
         git branch: nodeEnv, changelog: false, credentialsId: '1a83e8db-8990-44e5-8402-d991ecc3b7f1', poll: true, url: 'https://github.com/tomek10861/django-hello-world.git'
 
-    GIT_COMMIT_EMAIL = sh (
-        script: 'git --no-pager show -s --format=\'%ae\'',
+    branch = sh (
+        script: 'git --no-pager show -s --format=\'%d\' | cut -d\'>\' -f2 | cut -d\',\' -f1',
         returnStdout: true
     ).trim()
-    echo "Git committer email: ${GIT_COMMIT_EMAIL}"
+    commit = sh (
+        script: 'git --no-pager show -s --format=\'%h\'',
+        returnStdout: true
+    ).trim()
+    echo "Git branch: ${branch}, coommit: ${commit}"
 
 
     //                  echo "GIT_BRANCH is ${GIT_BRANCH}"
