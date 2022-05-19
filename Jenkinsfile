@@ -28,24 +28,32 @@
     echo \"build url=${BUILD_URL}\" >> buildinfo.txt
     echo \"agent name=${NODE_NAME}\" >> buildinfo.txt
     echo \"build path=${WORKSPACE}\" >> buildinfo.txt
+    cat buildinfo.txt
     """
 
           }
-
+def envDev() {
+POSTGRES_DB = credentials('POSTGRES_DB_DEV')
+POSTGRES_USER = credentials('POSTGRES_USER_DEV')
+POSTGRES_PASSWORD = credentials('POSTGRES_PASSWORD_DEV')
+}
+def envProd() {
+POSTGRES_DB = credentials('POSTGRES_DB_PROD')
+POSTGRES_USER = credentials('POSTGRES_USER_PROD')
+POSTGRES_PASSWORD = credentials('POSTGRES_PASSWORD_PROD')
+}
 pipeline {
         agent { node { label params.NODE } }
 
           environment {
           POSTGRES_HOST = credentials('POSTGRES_HOST')
-          POSTGRES_DB = credentials('POSTGRES_DB_DEV')
-          POSTGRES_USER = credentials('POSTGRES_USER_DEV')
-          POSTGRES_PASSWORD = credentials('POSTGRES_PASSWORD_DEV')
           }
 
           stages {
           stage('Git clone dev') {
               when { expression {  params.NODE == 'dev' } }
               steps {
+                  envDev()
                   gitClone('dev')
               }
           }
@@ -53,9 +61,11 @@ pipeline {
           stage('Git clone prod') {
               when { expression {  params.NODE == 'prod' } }
               steps {
+                  envProd()
                   gitClone('main')
               }
           }
+
           stage('Build env file') {
             steps {
                   sh '''#!/bin/bash
@@ -65,7 +75,6 @@ pipeline {
                   echo "POSTGRES_PASSWORD=$POSTGRES_PASSWORD" >> .env
                   echo "POSTGRES_HOSTDBNAME=$POSTGRES_HOST" >> .env
                   echo "POSTGRES_PORT=5432" >> .env
-                  cat buildinfo.txt
                      '''
             }
           }
