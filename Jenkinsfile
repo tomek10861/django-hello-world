@@ -1,5 +1,11 @@
 pipeline {
+
+    when {
+            expression { params.NODE == "dev" }
+        }
     agent { node { label 'dev' } }
+
+
 
     environment {
     POSTGRES_HOST = credentials('POSTGRES_HOST')
