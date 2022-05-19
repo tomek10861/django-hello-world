@@ -24,7 +24,7 @@
     echo \"commit=${commit}\" >> buildinfo.txt
     echo \"msg=${msg}\" >> buildinfo.txt
     echo \"author=${author}\" >> buildinfo.txt
-    echo \"build url=$BUILD_URL\" >> buildinfo.txt
+    echo \"build url=${BUILD_URL}\" >> buildinfo.txt
     echo \"agent name=${NODE_NAME}\" >> buildinfo.txt
     echo \"build path=${ITEM_ROOTDIR}\" >> buildinfo.txt
     """
