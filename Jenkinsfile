@@ -28,10 +28,6 @@ pipeline {
         stage('Build env file') {
           steps {
                 sh '''#!/bin/bash
-                      ls -lht
-                      sudo chown -R `whoami` .
-                   '''
-                sh '''#!/bin/bash
                 echo "DEBUGAPP=FALSE" > .env
                 echo "POSTGRES_NAME=$POSTGRES_DB" >> .env
                 echo "POSTGRES_USER=$POSTGRES_USER" >> .env
